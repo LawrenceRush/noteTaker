@@ -26,6 +26,8 @@
 </body>
 
 <script>
+
+
 $("#submit").on("click", function(event) {
   event.preventDefault();
 
@@ -43,7 +45,8 @@ $("#submit").on("click", function(event) {
       
       if (data) {
         alert("Note added");
-      }
+  }
+  
 
      
      
@@ -51,6 +54,9 @@ $("#submit").on("click", function(event) {
       $("#title").val("");
       $("#content").val("");
       
+      $.get("/",function(){
+    console.log("success")
+  });
     });
 
 });
