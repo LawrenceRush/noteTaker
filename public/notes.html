@@ -17,12 +17,43 @@
   <script src="/assets/js/index.js"></script>
   <form type="">
     <div>Title</div>
-    <input  placeholder="Enter a title here"type="text" name="" id="new-note-title">
+    <input  id = "title" placeholder="Enter a title here"type="text" name="" id="new-note-title">
     <div>Note</div>
-    <textarea  placeholder="Enter your note here"type="text" name="" id="new-note"></textarea>
+    <textarea id = "content" placeholder="Enter your note here"type="text" name="" id="new-note"></textarea>
     <br>
-    <button type="submit" class="">Submit</button>
+    <button type="submit" id = "submit" class="">Submit</button>
   </form>
 </body>
 
+<script>
+$("#submit").on("click", function(event) {
+  event.preventDefault();
+
+  
+  var newNote = {
+    title: $("#title").val().trim(),
+    content: $("#content").val().trim(),
+  };
+
+  console.log(newNote);
+
+  $.post("/api/notes", newNote,
+    function(data) {
+
+      
+      if (data) {
+        alert("Note added");
+      }
+
+     
+     
+      // Clear the form when submitting
+      $("#title").val("");
+      $("#content").val("");
+      
+    });
+
+});
+</script>
 </html>
+
