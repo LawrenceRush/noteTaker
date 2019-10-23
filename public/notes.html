@@ -111,7 +111,6 @@ input[type="text"] + label {
 $("#submit").on("click", function(event) {
   event.preventDefault();
 
-  
   var newNote = {
     title: $("#input_text").val().trim(),
     content: $("#textarea1").val().trim(),
@@ -130,8 +129,8 @@ $("#submit").on("click", function(event) {
      
      
       // Clear the form when submitting
-      $("#title").val("");
-      $("#content").val("");
+      $("#input_text").val("");
+      $("#textarea1").val("");
     
       
 

@@ -15,19 +15,23 @@ module.exports = function(app) {
 
   // API POST Requests
 
-
+ let i=1;
   app.post("/api/notes", function(req, res) {
     // Note the code here. Our "server" will respond to requests and let users know if they have a table or not.
-      noteData.push(req.body);
-      res.json(true);
-    
+    req.body.index = i
+    console.log(req.body)  
+    noteData.push(req.body);
+    i++ 
+    res.json(true);
+   
    
   });
 
  //Delete Single Data
   app.post("/api/delete", function(req, res) {
-    console.log(req)
-
+    let queryIndex = (parseInt(req.body.index))
+    noteData = noteData.filter( (object) => { return (object.index !== queryIndex)});
+    
     res.json({ ok: true });
   });
 

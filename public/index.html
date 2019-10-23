@@ -71,10 +71,6 @@
   <div id = "sideBar" ></div>
   <div id = "container">
       <ul class="collapsible">
-          <li>
-            <div class="collapsible-header relative"><i class="material-icons">check_box_outline_blank</i>Create your first note!<i class="material-icons align-right hide-show">clear</i></div>
-            <div class="collapsible-body"><span>C'mon, you know you want to.</span></div>
-          </li>
       
         </ul>
   </div>
@@ -95,11 +91,11 @@
 function runNoteQuery() {
 $.ajax({ url: "/api/notes", method: "GET" })
   .then(function(notesData) {
-    //console.log(notesData);
+    console.log(notesData);
 
     for (let i = 0; i<notesData.length; i++) {
      $(".collapsible").append(` <li>
-            <div class="collapsible-header relative"><i class="material-icons">check_box_outline_blank</i>${notesData[i].title}<i class="material-icons align-right hide-show">clear</i></div>
+            <div class="collapsible-header relative"><i class="material-icons">check_box_outline_blank</i>${notesData[i].title}<i value = "${notesData[i].index}" class="material-icons align-right hide-show">clear</i></div>
             <div class="collapsible-body"><span>${notesData[i].content}</span></div>
           </li>`)
      }
@@ -110,13 +106,9 @@ $.ajax({ url: "/api/notes", method: "GET" })
 
   runNoteQuery();
  
-  //Hover for buttons
+  //Hover/hide for buttons
 function inititalHide(){
-  // var buttons2hide = document.getElementsByClassName("hide-show");
-  // console.log(buttons2hide)
-  // for(let i =0; i<buttons2hide.length; i++){
-  //   console.log("hide")
-  // }
+ 
   $('.hide-show').hide()
 }
 
@@ -128,11 +120,20 @@ $(document).on('mouseover', 'li', function(){
 $(document).on('mouseout', 'li', function(){
   $(this).find(".hide-show").toggle();
   });
-
+//Get value of delete button when clicked and post
   $(document).on('click', '.hide-show', function(){
-  console.log("click working")
-  });
+  var buttonVal = $(this).attr("value")
+  var indexData = {index: parseInt(buttonVal)}
 
+  $.post("/api/delete", indexData,
+    function(data) {
+    if (data) {
+        console.log("front end success")  }
+
+      });
+    console.log($(this).parent().parent().hide())
+  });
+  
 
 </script>
 
