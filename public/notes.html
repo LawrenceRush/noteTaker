@@ -6,23 +6,103 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Note Taker</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.1.3/flatly/bootstrap.min.css" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-    crossorigin="anonymous">
-  <link rel="stylesheet" href="/assets/css/styles.css">
+  <!-- jquery -->
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+  <!-- Materialize -->
+   <!-- Compiled and minified CSS -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+   <!--Import Google Icon Font-->
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+   <!-- Compiled and minified JavaScript -->
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <!-- Custom Css -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+           
+  <style>
+    #nav-bar{
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+#container{
+  width:60%;
+  margin: 0 auto;
+  
+}
+
+#add-button{
+  display:block;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  text-align: end;
+  padding-right: 35px;
+}
+
+.card-action{
+  text-align: center;
+}
+
+.row{
+  margin-bottom: 0;
+}
+
+input[type="text"] + label {
+    pointer-events: none;
+}
+    * {
+        pointer-events: all;
+    }
+
+
+
+  </style>
 </head>
 
 <body>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="/assets/js/index.js"></script>
-  <form type="">
+    <nav>
+        <div id = "nav-bar" class="nav-wrapper">
+          <div id = "page-title" class="brand-logo">Notes</div>
+        </div>
+      </nav>
+
+      <div id = "add-button"><a href="/" class="btn-floating btn-large waves-effect waves-teal" ><i class="material-icons">chevron_left</i></a></div> 
+        <div id = "container">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">Add a note!</span>
+              <div class="col s12">
+                  <div><div class="input-field col s12">
+                      <input  id="input_text" type="text" class="validate">
+                      <label for="input_text">Title</label>
+                    </div></div>
+                <div><div class="input-field col s12">
+                  <textarea id="textarea1" class="materialize-textarea validate"></textarea>
+                  <label for="textarea1">Content</label>
+                </div></div>
+            <div class="card-action">
+              <a  id = "submit"class="waves-effect waves-light btn"><i class="material-icons right">mode_edit</i>Add</a>
+            </div>
+          </div>
+        </div>
+      </div>  
+    </div>
+  <!-- <div type="">
     <div>Title</div>
     <input  id = "title" placeholder="Enter a title here"type="text" name="" id="new-note-title">
     <div>Note</div>
     <textarea id = "content" placeholder="Enter your note here"type="text" name="" id="new-note"></textarea>
     <br>
-    <button type="submit" id = "submit" class="">Submit</button>
-  </form>
+    <a href="*"><button type="" id = "submit" class=""  >Submit</button></a>
+    <a href="/"><button>lolol</button></a>
+  </div> -->
+
+  
+
 </body>
 
 <script>
@@ -33,8 +113,8 @@ $("#submit").on("click", function(event) {
 
   
   var newNote = {
-    title: $("#title").val().trim(),
-    content: $("#content").val().trim(),
+    title: $("#input_text").val().trim(),
+    content: $("#textarea1").val().trim(),
   };
 
   console.log(newNote);
@@ -53,11 +133,13 @@ $("#submit").on("click", function(event) {
       // Clear the form when submitting
       $("#title").val("");
       $("#content").val("");
+    
       
-      $.get("/",function(){
-    console.log("success")
-  });
+
     });
+
+    // $.ajax({ url: "/asd", method: "GET" })
+  
 
 });
 </script>

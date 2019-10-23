@@ -22,7 +22,30 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <!-- Custom Css -->
   <link rel="stylesheet" href="assets/css/styles.css">
-           
+  <style>
+
+  #nav-bar{
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+#container{
+  width:60%;
+  margin: 0 auto;
+  
+}
+
+#add-button{
+  margin-top: 25px;
+  margin-bottom: 10px;
+  text-align: end;
+  padding-right: 35px;
+}
+
+
+
+
+  </style>
    
 </head>
 
@@ -34,7 +57,7 @@
           <div id = "page-title" class="brand-logo">Notes</div>
         </div>
       </nav>
-
+      <div id = "add-button"><a href="/new-note" class="btn-floating btn-large waves-effect waves-light red" ><i class="material-icons">add</i></a></div>
   <div id = "sideBar" ></div>
   <div id = "container">
       <ul class="collapsible">
@@ -45,7 +68,7 @@
       
         </ul>
   </div>
-  <a href="/new-note"><button type="" class=""  >New Note</button></a>
+  
  
  
 </body>
