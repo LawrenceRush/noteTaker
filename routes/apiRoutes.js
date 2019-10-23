@@ -24,8 +24,14 @@ module.exports = function(app) {
    
   });
 
-  //Clear data
+ //Delete Single Data
+  app.post("/api/delete", function(req, res) {
+    console.log(req)
 
+    res.json({ ok: true });
+  });
+
+ //Clear data
   app.post("/api/clear", function(req, res) {
     // Empty out the arrays of data
     noteData.length = 0;
