@@ -1,8 +1,15 @@
 var express = require("express");
+var mysql = require("mysql")
  //Set Up
 var app = express();
 var PORT = process.env.PORT || 8080;
 
+//Heroku Stuff
+var connection 
+if (process.env.JAWSDB_URL){
+  connection = mysql.createConnection(process.env.JAWSDB_URL);
+}
+  
 //Parse utility. Research further
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
