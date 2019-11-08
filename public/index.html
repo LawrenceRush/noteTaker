@@ -95,7 +95,7 @@ $.ajax({ url: "/api/notes", method: "GET" })
 
     for (let i = 0; i<notesData.length; i++) {
      $(".collapsible").append(` <li>
-            <div class="collapsible-header relative"><i class="material-icons">check_box_outline_blank</i>${notesData[i].title}<i value = "${notesData[i].index}" class="material-icons align-right hide-show">clear</i></div>
+            <div class="collapsible-header relative"><i value = "${notesData[i].finished}" number = "${notesData[i].index}" id="checkbox" class="material-icons">check_box_outline_blank</i>${notesData[i].title}<i value = "${notesData[i].index}" class="material-icons align-right hide-show">clear</i></div>
             <div class="collapsible-body"><span>${notesData[i].content}</span></div>
           </li>`)
      }
@@ -120,6 +120,8 @@ $(document).on('mouseover', 'li', function(){
 $(document).on('mouseout', 'li', function(){
   $(this).find(".hide-show").toggle();
   });
+
+
 //Get value of delete button when clicked and post
   $(document).on('click', '.hide-show', function(){
   var buttonVal = $(this).attr("value")
@@ -131,7 +133,51 @@ $(document).on('mouseout', 'li', function(){
         console.log("front end success")  }
 
       });
-    console.log($(this).parent().parent().hide())
+    $(this).parent().parent().hide()
+  });
+
+  //Change the checkmarks
+  $(document).on('click', ' #checkbox', async function(e){
+    notesData = await $.ajax({ url: "/api/notes", method: "GET" })
+    console.log("working")
+    var finishedVal = ($(this).attr("value") == 'true')
+    console.log(finishedVal)
+    
+    if (finishedVal){
+     // (this).html("check_box_outline_blank");
+     console.log("activated for true")
+     $(this).html("check_box_outline_blank")
+      $(this).attr("value","false");
+      let data2Send = {
+        index: $(this).attr("number"),
+        finished: finishedVal
+      }
+      $.post("/api/update", data2Send,
+    function(data) {
+    if (data) {
+        console.log("front end success")  }
+
+      });
+
+    }else {
+    //  (this).html("check");
+      $(this).attr("value", "true");
+      $(this).html("check")
+      console.log("activated for false")
+      let data2Send = {
+        index: $(this).attr("number"),
+        finished: finishedVal
+      }
+      $.post("/api/update", data2Send,
+    function(data) {
+    if (data) {
+        console.log("front end success")  }
+
+      });
+  
+    }
+
+
   });
   
 

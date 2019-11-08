@@ -19,6 +19,7 @@ module.exports = function(app) {
   app.post("/api/notes", function(req, res) {
     // Note the code here. Our "server" will respond to requests and let users know if they have a table or not.
     req.body.index = i
+    req.body.finished = false
     console.log(req.body)  
     noteData.push(req.body);
     i++ 
@@ -42,4 +43,13 @@ module.exports = function(app) {
 
     res.json({ ok: true });
   });
-};
+
+  app.post("/api/update", function(req, res){
+     console.log(req.body)
+     let finished = (req.body.finished == 'true' )
+     
+
+    noteData[req.body.index].finished = finished
+  console.log(noteData[req.body.index])
+
+  })}
