@@ -45,11 +45,10 @@ module.exports = function(app) {
   });
 
   app.post("/api/update", function(req, res){
-     console.log(req.body)
+     
      let finished = (req.body.finished == 'true' )
      
-
+     
     noteData[req.body.index].finished = finished
-  console.log(noteData[req.body.index])
 
   })}
