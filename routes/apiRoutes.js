@@ -46,9 +46,10 @@ module.exports = function(app) {
 
   app.post("/api/update", function(req, res){
      
-     let finished = (req.body.finished == 'true' )
+    console.log(req.body)
+     let finished = req.body.finished
+     let index = req.body.index
      
-     
-    noteData[req.body.index].finished = finished
+    noteData[index].finished = finished
 
   })}
