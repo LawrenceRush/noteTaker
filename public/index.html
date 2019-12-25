@@ -61,7 +61,10 @@ runNoteQuery();
     $.ajax({ url: "/api/notes", method: "GET" })
       .then(function (notesData) {
          console.log(notesData);
+        if(notesData > 0){
+          $('.collapsible').show();
 
+        }
         for (let i = 0; i < notesData.length; i++) {
           $(".collapsible").append(` <li id = "list-item" class = ""> 
             <div class="collapsible-header relative"><i value = "${notesData[i].finished}" number = "${notesData[i].index}" id="" class="material-icons checkbox">check_box_outline_blank</i>${notesData[i].title}<i value = "${notesData[i].index}" class="material-icons align-right hide-show">clear</i></div>
@@ -100,7 +103,13 @@ runNoteQuery();
       function (data) {
         if (data) {
           console.log("front end success")
+          console.log(data)
+          if(data.length == 0){
+            $('.collapsible').hide();
+            console.log('hidden')
+          }
         }
+        
 
       });
     $(this).parent().parent().hide()

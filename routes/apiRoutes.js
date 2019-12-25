@@ -23,7 +23,7 @@ module.exports = function(app) {
     console.log(req.body)  
     noteData.push(req.body);
     i++ 
-    res.json(true);
+    res.json(noteData);
    
    
   });
@@ -33,7 +33,7 @@ module.exports = function(app) {
     let queryIndex = (parseInt(req.body.index))
     noteData = noteData.filter( (object) => { return (object.index !== queryIndex)});
     
-    res.json({ ok: true });
+    res.json(noteData);
   });
 
  //Clear data
