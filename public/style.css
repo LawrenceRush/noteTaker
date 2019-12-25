@@ -1,0 +1,40 @@
+
+    body{
+        background-image: url("imgs/linedpaper.png")
+      } 
+      #nav-bar {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+  
+      #container {
+        width: 60%;
+        margin: 0 auto;
+  
+      }
+  
+      #add-button {
+        margin-top: 25px;
+        margin-bottom: 10px;
+        text-align: end;
+        padding-right: 35px;
+      }
+  
+      .align-right {
+        position: absolute;
+        right: 0px;
+  
+      }
+  
+      .relative {
+        position: relative;
+      }
+  
+      #testButton{
+        height: 300px;
+        width: 300px;
+      }
+
+      .collapsible-body{
+          background-color: white;
+      }

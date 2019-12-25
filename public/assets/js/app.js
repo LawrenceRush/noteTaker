@@ -13,6 +13,7 @@ if (process.env.JAWSDB_URL){
 //Parse utility. Research further
 app.use(express.urlencoded({ exstended: true }));
 app.use(express.json());
+app.use(express.static('public'));
 
 // ROUTER
 require("../../../routes/apiRoutes")(app);
