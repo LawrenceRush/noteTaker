@@ -7,135 +7,156 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Note Taker</title>
   <!-- jquery -->
-  <script
-  src="https://code.jquery.com/jquery-3.4.1.js"
-  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-  crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
   <!-- Materialize -->
-   <!-- Compiled and minified CSS -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-   <!--Import Google Icon Font-->
-   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-   <!-- Compiled and minified JavaScript -->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <!-- Custom Css -->
-  <link rel="stylesheet" href="assets/css/styles.css">
-  <style>
+  <link rel="stylesheet" href="style.css">
 
-  #nav-bar{
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-#container{
-  width:60%;
-  margin: 0 auto;
-  
-}
-
-#add-button{
-  margin-top: 25px;
-  margin-bottom: 10px;
-  text-align: end;
-  padding-right: 35px;
-}
-
-.align-right{
-  position: absolute;
-  right: 0px;
-  
-}
-
-.relative{
-  position: relative;
-}
-
-
-
-
-  </style>
-   
 </head>
 
 <body>
- 
-  
-    <nav>
-        <div id = "nav-bar" class="nav-wrapper">
-          <div id = "page-title" class="brand-logo">Notes</div>
-        </div>
-      </nav>
-      <div id = "add-button"><a href="/new-note" class="btn-floating btn-large waves-effect waves-light red" ><i class="material-icons">add</i></a></div>
-  <div id = "sideBar" ></div>
-  <div id = "container">
-      <ul class="collapsible">
-      
-        </ul>
+
+
+  <nav>
+    
+    <div id="nav-bar" class="nav-wrapper">
+      <div id="page-title" class="brand-logo">Notes</div>
+    </div>
+  </nav>
+  <div id="add-button"><a href="/new-note" class="btn-floating btn-large waves-effect waves-light red"><i
+        class="material-icons">add</i></a></div>
+  <div id="sideBar"></div>
+  <div id="container">
+    <ul class="collapsible">
+
+    </ul>
   </div>
-  
- 
- 
+
+
+
 </body>
 
 
 
 <script>
+let firstClick = true;
+
+runNoteQuery();
   //Initialize collapsible functionality on collapsibles. Don't mess with it. 
- $(document).ready(function(){
-    $('.collapsible').collapsible();
+  $(document).ready(function () {
+     $('.collapsible').collapsible();
   });
 
-//Gets data for rendering on page.
-function runNoteQuery() {
-$.ajax({ url: "/api/notes", method: "GET" })
-  .then(function(notesData) {
-    console.log(notesData);
+  //Gets data for rendering on page.
+  function runNoteQuery() {
+    $.ajax({ url: "/api/notes", method: "GET" })
+      .then(function (notesData) {
+         console.log(notesData);
+        if(notesData > 0){
+          $('.collapsible').show();
 
-    for (let i = 0; i<notesData.length; i++) {
-     $(".collapsible").append(` <li>
-            <div class="collapsible-header relative"><i class="material-icons">check_box_outline_blank</i>${notesData[i].title}<i value = "${notesData[i].index}" class="material-icons align-right hide-show">clear</i></div>
+        }
+        for (let i = 0; i < notesData.length; i++) {
+          $(".collapsible").append(` <li id = "list-item" class = ""> 
+            <div class="collapsible-header relative"><i value = "${notesData[i].finished}" number = "${notesData[i].index}" id="" class="material-icons checkbox">check_box_outline_blank</i>${notesData[i].title}<i value = "${notesData[i].index}" class="material-icons align-right hide-show">clear</i></div>
             <div class="collapsible-body"><span>${notesData[i].content}</span></div>
           </li>`)
-     }
-     inititalHide();
+        }
+        inititalHide();
 
-    })
+      })
   }
 
-  runNoteQuery();
- 
+  
+
   //Hover/hide for buttons
-function inititalHide(){
- 
-  $('.hide-show').hide()
-}
+  function inititalHide() {
+
+    $('.hide-show').hide()
+  }
 
 
-$(document).on('mouseover', 'li', function(){
-     $(this).find(".hide-show").toggle();
-    
+  $(document).on('mouseover', 'li', function () {
+    $(this).find(".hide-show").toggle();
+
   });
-$(document).on('mouseout', 'li', function(){
-  $(this).find(".hide-show").toggle();
+  $(document).on('mouseout', 'li', function () {
+    $(this).find(".hide-show").toggle();
   });
-//Get value of delete button when clicked and post
-  $(document).on('click', '.hide-show', function(){
-  var buttonVal = $(this).attr("value")
-  var indexData = {index: parseInt(buttonVal)}
 
-  $.post("/api/delete", indexData,
-    function(data) {
-    if (data) {
-        console.log("front end success")  }
+
+  //Get value of delete button when clicked and post
+  $(document).on('click', '.hide-show', function () {
+    var buttonVal = $(this).attr("value")
+    var indexData = { index: parseInt(buttonVal) }
+
+    $.post("/api/delete", indexData,
+      function (data) {
+        if (data) {
+          console.log("front end success")
+          console.log(data)
+          if(data.length == 0){
+            $('.collapsible').hide();
+            console.log('hidden')
+          }
+        }
+        
 
       });
-    console.log($(this).parent().parent().hide())
+    $(this).parent().parent().hide()
   });
+ 
+
+  $(document).on('click', ' .checkbox', function (e) {
+    var instance = M.Collapsible.getInstance($('.collapsible'));
+    let liNum = parseInt($(this).attr("number"))
+    instance.close(liNum-1)
+    instance.close(parseInt($(this).attr("number")));
+   
+   var finishedVal = ($(this).attr("value") === 'true')
   
+    if (finishedVal) {
+      console.log('activate true')
+      $(this).html("check_box_outline_blank")
+      $(this).attr("value", "false");
+      let data2Send = {
+        index: $(this).attr("number"),
+        finished: ! finishedVal
+      }
+      $.post("/api/update", data2Send,
+        function (data) {
+          console.log(data)
+        });
+
+    } else {
+      //  (this).html("check");
+      $(this).attr("value", "true");
+      $(this).html("check")
+      //console.log("activated for false")
+      let data2Send = {
+        index: $(this).attr("number"),
+        finished: finishedVal
+      }
+      $.post("/api/update", data2Send,
+        function (data) {
+          //console.log(data)
+        });
+
+    }
+
+
+  });
+
 
 </script>
 
 </html>
-
